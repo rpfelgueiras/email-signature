@@ -88,9 +88,15 @@ export default function App() {
   }
 
   function onChangePhotoURL(event) {
-    var urlToViewTheGDriveImage = getGDriveUrlToViewPhoto(event.target.value);
-    if (urlToViewTheGDriveImage) {
-      setSelectedImageUrl(urlToViewTheGDriveImage);
+    // Check if it is a Google Drive photo. If it is not, use the URL directly
+    var imageSrcUrl = event.target.value;
+    if (event.target.value.indexOf('drive.google.com') !== -1) {
+      imageSrcUrl = getGDriveUrlToViewPhoto(event.target.value);
+    }
+
+    // var urlToViewTheGDriveImage = getGDriveUrlToViewPhoto(event.target.value);
+    if (imageSrcUrl) {
+      setSelectedImageUrl(imageSrcUrl);
       setimageURLErrorMessage("");
     } else {
       // error
@@ -267,7 +273,7 @@ export default function App() {
                     htmlFor="photo"
                     className="block text-xs font-medium text-gray-900"
                   >
-                    GDrive Photo URL
+                    GDrive Photo or HubSpot URL 
                   </label>
                   <input
                     type="text"
